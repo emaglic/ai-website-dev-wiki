@@ -5,6 +5,8 @@ This page tracks what has been done, what is next, and what is blocked.
 ## Current Status
 
 - Template scaffold has been created.
+- README now explains the base wiki project, directory structure, agent workflow, and `/setup` starting point.
+- `.gitignore` now excludes temporary lock files, local environment files, dependencies, caches, generated outputs, logs, and OS/editor metadata.
 - Project-specific setup has not been run.
 
 ## Next Tasks
@@ -25,8 +27,9 @@ This page tracks what has been done, what is next, and what is blocked.
 - Created repo-local setup workflow.
 - Created agent instruction files.
 - Created placeholder directories for raw material, local locks, and website files.
+- Wrote the repository README for template users and future agents.
+- Added repository ignore rules for non-source local and generated files.
 
 ## Blocked Items
 
 - Project-specific planning and website development are blocked until `/setup` is run with real project details.
-
