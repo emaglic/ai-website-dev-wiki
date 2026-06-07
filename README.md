@@ -68,6 +68,8 @@ The repo-local setup workflow lives at:
 .agents/skills/setup/SKILL.md
 ```
 
+It is also registered as a repo-local Codex skill, so Codex surfaces that support skills may show it as `setup` or let you invoke it as `$setup`.
+
 During `/setup`, the agent will ask focused questions about:
 
 - the kind of website you are building
@@ -80,7 +82,7 @@ During `/setup`, the agent will ask focused questions about:
 
 After that, the agent initializes the wiki with project-specific strategy, content notes, design direction, technical choices, open questions, and a roadmap.
 
-Do not personalize this template for a specific website before running `/setup`.
+Do not personalize this template for a specific website before running `/setup`. If an agent sees that the wiki is still mostly boilerplate or lacks the basic project definition needed for the task, it should pause project-specific work and ask whether you want to run `/setup` first.
 
 ## Building The Website
 

@@ -1,3 +1,8 @@
+---
+name: setup
+description: Use when the user asks to run /setup or initialize this website wiki template for a real website project. This repo-local workflow gathers project details, initializes the wiki, and prepares the site roadmap.
+---
+
 # Repo-Local `/setup` Workflow
 
 Use this workflow when the user asks for `/setup`. This file is intentionally stored inside the repository so the template remains portable and self-contained. Do not create, install, or require global, system-wide, user-profile, or machine-level skills.
@@ -102,6 +107,18 @@ After the setup conversation, update these files:
 - `wiki/articles/log.md`
 
 Use concise synthesized notes, not a transcript. Link related wiki pages where useful.
+
+## Completion Signals
+
+When setup is complete, remove starter placeholder text from the core project fields and leave a clear project-ready signal:
+
+- `project-brief.md` identifies the website type, owner or brand, industry or field, primary goal, target audience, likely pages or sections, success criteria, and constraints.
+- `technical-architecture.md` identifies the chosen stack and hosting or deployment assumption, even when the answer is "static HTML/CSS/JS" and "deployment not yet chosen."
+- `task-roadmap.md` no longer says project-specific setup has not been run.
+- `open-questions.md` contains only unresolved follow-ups, not the full starter questionnaire.
+- `log.md` contains `## YYYY-MM-DD | setup | Initialized project wiki`.
+
+If the user cannot answer every setup question, record known answers, mark unknowns as open questions, and make clear whether the project is ready for initial website work or still blocked by missing essentials.
 
 ## Article-Specific Guidance
 
@@ -212,4 +229,3 @@ After `/setup` is complete:
 4. Continue future work from the initialized wiki and the durable operating rules in `AGENTS.md` or `CLAUDE.md`.
 
 The setup skill may remain in the repository for future reference, but ongoing agents should rely primarily on the initialized wiki.
-

@@ -15,10 +15,17 @@ This page records durable project decisions so future agents understand what was
 
 ## 2026-06-07 | Use a repo-local setup workflow
 
-- Decision: Store the `/setup` workflow at `.agents/skills/setup/SKILL.md`.
-- Rationale: The template should remain portable and self-contained when cloned.
-- Alternatives considered: Global or user-profile skills.
-- Impact: Future agents should read the repo-local skill instead of requiring system-level configuration.
+- Decision: Store the `/setup` workflow as an actual repo-local skill at `.agents/skills/setup/SKILL.md`.
+- Rationale: The template should remain portable and self-contained when cloned while still allowing Codex skill discovery where supported.
+- Alternatives considered: Global or user-profile skills; instruction-only workflow without skill frontmatter.
+- Impact: Future agents should read the repo-local skill instead of requiring system-level configuration. Users may ask for `/setup` naturally or invoke the `setup` skill directly where available.
+
+## 2026-06-07 | Require setup before project-specific work
+
+- Decision: Agents must check whether the wiki has enough project-specific information before doing project-specific website, content, design, wiki strategy, or site implementation work.
+- Rationale: The starter wiki is intentionally generic and should not be treated as initialized project memory merely because files exist.
+- Alternatives considered: Letting agents infer project details from partial prompts; relying only on a setup log entry; relying only on placeholder detection.
+- Impact: If the starter articles are still boilerplate, lack the minimum project definition, or show setup has not run, agents should tell the user the project needs `/setup` and ask whether to run it now. If the wiki is partially initialized but missing task-relevant information, agents should ask focused follow-up questions or offer to resume `/setup`. Template-maintenance work can still proceed before setup.
 
 ## 2026-06-07 | Separate wiki memory from website implementation
 
@@ -26,4 +33,3 @@ This page records durable project decisions so future agents understand what was
 - Rationale: Separating knowledge management from implementation keeps both areas easier to maintain.
 - Alternatives considered: Combining notes and site files in one directory.
 - Impact: Future agents should update the wiki after meaningful work and keep website files inside `site/`.
-

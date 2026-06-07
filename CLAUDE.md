@@ -16,13 +16,15 @@ This repository is a reusable template for building websites with AI assistance 
 
 Before meaningful work, read `wiki/articles/index.md`, `wiki/articles/log.md`, and the wiki pages relevant to the task. Check `wiki/raw/` when the task involves content or design direction.
 
+Before project-specific website, content, design, wiki strategy, or site implementation work, verify whether the wiki has enough project-specific information to proceed. Read the starter project articles: `project-brief.md`, `design-direction.md`, `content-inventory.md`, `technical-architecture.md`, `task-roadmap.md`, `open-questions.md`, `log.md`, and `decisions.md`. Treat setup as incomplete when the wiki is still boilerplate or lacks a minimum project definition: website type, owner or brand, industry or field, primary goal, target audience, likely pages or sections, chosen stack or deployment assumption, and a setup log entry. Placeholder-heavy starter articles or a roadmap saying setup has not been run mean setup is incomplete. If setup is incomplete, tell the user the project wiki still needs `/setup` and ask whether they want to run it now. If the wiki is partially initialized but lacks information needed for the current task, ask focused follow-up questions or offer to resume `/setup`. Template-maintenance work may proceed before setup when the user is explicitly improving the template itself.
+
 After meaningful work, update the affected wiki articles, record durable decisions in `wiki/articles/decisions.md`, update `wiki/articles/task-roadmap.md`, append to `wiki/articles/log.md`, and update `wiki/articles/index.md` when wiki pages change meaningfully.
 
 ## Repo-Local `/setup`
 
-When the user asks for `/setup`, read and follow `.agents/skills/setup/SKILL.md`.
+When the user asks for `/setup`, or explicitly invokes the repo-local `setup` skill, read and follow `.agents/skills/setup/SKILL.md`.
 
-The `/setup` workflow must remain local to this repository so the template can be cloned and reused without global, system-wide, user-profile, or machine-level skill files.
+The `/setup` workflow is an actual repo-local skill at `.agents/skills/setup/SKILL.md`. It must remain checked into this repository so the template can be cloned and reused without global, system-wide, user-profile, or machine-level skill files.
 
 ## Wiki Standards
 
@@ -86,4 +88,3 @@ After finishing, update the wiki, append the log, remove the lock file, and repo
 If a lock appears stale, inspect `Created`, `Last heartbeat`, `Expires`, and `Scope`. If the expiration has not passed, treat it as active. If it has passed, check for uncommitted or unexpected changes in scope before removing it. Preserve possible interrupted-agent work and ask the user how to proceed when conflicts are unclear. If stale cleanup is safe, record it in `wiki/articles/log.md`.
 
 This protocol is cooperative rather than foolproof. It is meant to make coordination visible and reduce accidental overwrites.
-

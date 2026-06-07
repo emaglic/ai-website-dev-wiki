@@ -22,6 +22,37 @@ Before doing meaningful website, content, design, or strategy work:
 4. Check `wiki/raw/` for new source material when the task involves content or design direction.
 5. Check `.agents/locks/` before editing files in `wiki/articles/` or `site/`.
 
+## Project Readiness Preflight
+
+Before doing meaningful website, content, design, wiki strategy, or site implementation work, verify whether the wiki has enough project-specific information to proceed.
+
+Start by reading the starter project articles:
+
+- `wiki/articles/project-brief.md`
+- `wiki/articles/design-direction.md`
+- `wiki/articles/content-inventory.md`
+- `wiki/articles/technical-architecture.md`
+- `wiki/articles/task-roadmap.md`
+- `wiki/articles/open-questions.md`
+- `wiki/articles/log.md`
+- `wiki/articles/decisions.md`
+
+Treat `/setup` as not completed when the wiki is still boilerplate or lacks the minimum project definition needed for real work. Signals include:
+
+- `project-brief.md` does not identify the website type, owner or brand, industry or field, primary goal, target audience, and likely pages or sections.
+- `technical-architecture.md` does not identify a chosen stack or deployment assumption.
+- `task-roadmap.md` says project-specific setup has not been run.
+- The key project articles still mostly contain placeholder lines such as `Placeholder:` or `To be defined during /setup`.
+- `wiki/articles/log.md` does not contain a setup entry such as `| setup | Initialized project wiki`.
+
+The wiki content is the primary readiness signal. A setup log entry is useful supporting evidence, but it is not enough if the core articles still lack real project details.
+
+If `/setup` has not been completed, do not proceed with project-specific website/wiki work. Tell the user that this template still needs `/setup` to initialize the project wiki, then ask whether they want to run `/setup` now.
+
+If the wiki is partially initialized but lacks information needed for the current task, ask focused follow-up questions or offer to resume `/setup` to fill the missing fields before continuing.
+
+Template-maintenance work is allowed before `/setup` when the user is explicitly improving the template itself, the setup workflow, or agent instructions.
+
 ## After Meaningful Work
 
 After doing meaningful work:
@@ -34,9 +65,9 @@ After doing meaningful work:
 
 ## Repo-Local `/setup`
 
-When the user asks for `/setup`, read and follow `.agents/skills/setup/SKILL.md`.
+When the user asks for `/setup`, or explicitly invokes the repo-local `setup` skill, read and follow `.agents/skills/setup/SKILL.md`.
 
-The `/setup` workflow is intentionally repo-local and portable. Do not install, create, or require global, system-wide, user-profile, or machine-level skills for this template.
+The `/setup` workflow is an actual repo-local skill at `.agents/skills/setup/SKILL.md`. It should remain portable and checked into the repository. Do not install, create, or require global, system-wide, user-profile, or machine-level skills for this template.
 
 ## Wiki Maintenance Standards
 
@@ -120,4 +151,3 @@ If a lock appears stale:
 - If the lock is stale and there are no conflicting file changes in scope, the agent may remove it and must record that cleanup in `wiki/articles/log.md`.
 
 This lock protocol is cooperative rather than foolproof. It makes coordination visible and reduces accidental overwrites.
-
