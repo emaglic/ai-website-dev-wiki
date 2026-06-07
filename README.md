@@ -30,7 +30,8 @@ This avoids restarting from scratch every time a new AI session begins.
 │   ├── articles/           # LLM-managed project wiki
 │   └── raw/
 │       ├── content/        # User-provided raw content
-│       └── inspiration/    # Visual references, screenshots, palettes, examples
+│       ├── inspiration/    # Visual references, screenshots, palettes, examples
+│       └── research/       # Market, competitor, audience, SEO, and industry sources
 ├── AGENTS.md               # Operating instructions for AI agents
 ├── CLAUDE.md               # Companion agent instructions
 └── README.md
@@ -47,12 +48,15 @@ Key pages include:
 - `wiki/articles/design-direction.md`: visual strategy and inspiration
 - `wiki/articles/content-inventory.md`: content sources, missing copy, and content risks
 - `wiki/articles/technical-architecture.md`: chosen stack, deployment assumptions, and build notes
+- `wiki/articles/research.md`: synthesized research findings and expert guidance
 - `wiki/articles/task-roadmap.md`: current status, next tasks, backlog, and blocked items
 - `wiki/articles/decisions.md`: durable decisions and rationale
 - `wiki/articles/open-questions.md`: unresolved questions
 - `wiki/articles/log.md`: chronological project history
 
 The `wiki/raw/` folder is for user-provided source material. Treat these files as source-of-truth input. Agents should not modify raw files unless explicitly asked.
+
+Research uses two layers: `wiki/raw/research/` stores user-provided research sources, while `wiki/articles/research.md` stores only meaningful synthesized findings. Project-specific research should wait until `/setup` has defined the project field, audience, goals, and expert perspective.
 
 ## Getting Started With `/setup`
 
@@ -77,6 +81,7 @@ During `/setup`, the agent will ask focused questions about:
 - the target audience and primary goal
 - needed pages or sections
 - available content and inspiration
+- available research sources and the expert perspective agents should use
 - visual direction and brand constraints
 - preferred technical approach and hosting needs
 

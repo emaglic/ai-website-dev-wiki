@@ -33,3 +33,10 @@ This page records durable project decisions so future agents understand what was
 - Rationale: Separating knowledge management from implementation keeps both areas easier to maintain.
 - Alternatives considered: Combining notes and site files in one directory.
 - Impact: Future agents should update the wiki after meaningful work and keep website files inside `site/`.
+
+## 2026-06-07 | Add post-setup research memory
+
+- Decision: Add `wiki/articles/research.md` for synthesized research findings and `wiki/raw/research/` for user-provided research sources. Project-specific research should happen only after `/setup` captures the project field, audience, goals, and expert perspective.
+- Rationale: Useful research depends on knowing the website context and should become durable project memory only when it meaningfully affects strategy, content, design, SEO, positioning, technical choices, or future decisions.
+- Alternatives considered: Store research in existing content or inspiration pages; create a separate research skill immediately; allow research before setup.
+- Impact: Future agents should answer research questions as domain experts after setup, cite web/current claims, avoid blindly cataloging search results, and ask the user before filing findings whose relevance is unclear.

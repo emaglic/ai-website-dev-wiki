@@ -6,6 +6,7 @@ This page tracks unresolved questions that affect strategy, content, design, tec
 
 - What kind of website is being built?
 - Who is the website for?
+- What expert perspective should future agents use for strategic and research guidance?
 - What is the primary goal?
 - Who is the target audience?
 
@@ -32,8 +33,12 @@ This page tracks unresolved questions that affect strategy, content, design, tec
 - Where will the site be hosted?
 - Are there domain, analytics, form handling, email, SSL, or performance requirements?
 
+## Research Questions
+
+- What user-provided research sources exist in `wiki/raw/research/`?
+- What market, audience, competitor, SEO, industry, or positioning questions should research answer?
+
 ## Notes For Future Agents
 
 - Close questions when they are answered and move durable answers into the appropriate wiki article.
 - Keep unresolved questions specific enough that the user can answer them easily.
-

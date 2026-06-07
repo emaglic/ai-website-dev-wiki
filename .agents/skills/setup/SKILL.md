@@ -15,7 +15,7 @@ Act as three roles at once:
 
 - Wiki Manager: initialize and maintain the markdown wiki as project memory.
 - Website Developer: choose and document a practical implementation approach for `site/`.
-- Industry Expert: once the website type and field are known, provide strategic guidance for that context.
+- Industry Expert: once the website type, field, and desired expertise lens are known, provide strategic guidance for that context.
 
 Assume the user may not be a developer. Ask focused questions in plain language and handle the wiki updates yourself.
 
@@ -35,7 +35,7 @@ Before asking project questions:
 1. Read `AGENTS.md` or the relevant agent guide.
 2. Read `wiki/articles/index.md`.
 3. Read `wiki/articles/log.md`.
-4. Inspect `wiki/raw/inspiration/` and `wiki/raw/content/` for existing source files.
+4. Inspect `wiki/raw/inspiration/`, `wiki/raw/content/`, and `wiki/raw/research/` for existing source files.
 5. Check `.agents/locks/` for overlapping locks on `wiki/articles/`.
 6. Create a narrow lock for the wiki articles you will update.
 
@@ -51,46 +51,48 @@ Ask these questions in batches of 3 to 5. Adapt wording to the user, but preserv
    - Person, brand, company, studio, organization, product, or project.
 3. What industry or creative field does it belong to?
    - Design, art direction, technology, healthcare, music, consulting, etc.
+4. What expert perspective should future agents use when giving strategic or research guidance?
+   - Examples: luxury ecommerce strategist, local service business marketer, gallery curator, healthcare content strategist, SaaS growth advisor, nonprofit communications lead, etc.
 
 ### Goals And Audience
 
-4. What is the primary goal of the website?
+5. What is the primary goal of the website?
    - Get clients, showcase work, sell products, publish writing, build credibility, collect leads, etc.
-5. Who is the intended audience?
+6. Who is the intended audience?
    - Recruiters, clients, collaborators, customers, fans, investors, etc.
-6. What would make the website successful?
+7. What would make the website successful?
    - Concrete outcomes, user actions, business results, quality standards, or launch criteria.
 
 ### Structure And Content
 
-7. What pages or sections are likely needed?
+8. What pages or sections are likely needed?
    - Home, About, Work, Case Studies, Services, Contact, Blog, Shop, Resume, etc.
-8. What raw content or inspiration has already been provided in `wiki/raw/`?
-9. Is any content missing, sensitive, outdated, or not ready to publish?
+9. What raw content, inspiration, or research has already been provided in `wiki/raw/`?
+10. Is any content missing, sensitive, outdated, or not ready to publish?
 
 ### Design Direction
 
-10. What visual tone should the site have?
+11. What visual tone should the site have?
     - Minimal, editorial, playful, premium, technical, warm, bold, refined, experimental, etc.
-11. Are there inspiration sources, references, competitors, or examples to consider?
-12. Are there brand constraints such as logo, colors, typography, imagery, voice, or existing materials?
+12. Are there inspiration sources, references, competitors, or examples to consider?
+13. Are there brand constraints such as logo, colors, typography, imagery, voice, or existing materials?
 
 ### Technical Approach
 
-13. What technical approach should we use?
+14. What technical approach should we use?
     - Static HTML/CSS/JS
     - React, Vue, Svelte, or another app framework
     - Static site generator
     - Component framework
     - Other
-14. Are there constraints?
+15. Are there constraints?
     - Must be easy to FTP
     - No database
     - Mobile-first
     - Must load fast
     - Must be easy to edit later
     - Must match an existing brand
-15. How should the finished website be hosted or deployed, if known?
+16. How should the finished website be hosted or deployed, if known?
 
 ## Wiki Initialization
 
@@ -100,6 +102,7 @@ After the setup conversation, update these files:
 - `wiki/articles/design-direction.md`
 - `wiki/articles/content-inventory.md`
 - `wiki/articles/technical-architecture.md`
+- `wiki/articles/research.md`
 - `wiki/articles/task-roadmap.md`
 - `wiki/articles/open-questions.md`
 - `wiki/articles/decisions.md`
@@ -112,7 +115,7 @@ Use concise synthesized notes, not a transcript. Link related wiki pages where u
 
 When setup is complete, remove starter placeholder text from the core project fields and leave a clear project-ready signal:
 
-- `project-brief.md` identifies the website type, owner or brand, industry or field, primary goal, target audience, likely pages or sections, success criteria, and constraints.
+- `project-brief.md` identifies the website type, owner or brand, industry or field, expert perspective for research and strategy, primary goal, target audience, likely pages or sections, success criteria, and constraints.
 - `technical-architecture.md` identifies the chosen stack and hosting or deployment assumption, even when the answer is "static HTML/CSS/JS" and "deployment not yet chosen."
 - `task-roadmap.md` no longer says project-specific setup has not been run.
 - `open-questions.md` contains only unresolved follow-ups, not the full starter questionnaire.
@@ -129,6 +132,7 @@ Record the central project definition:
 - Website type
 - Website owner or brand
 - Industry or field
+- Expert perspective for research and strategy
 - Primary goal
 - Target audience
 - Key pages or sections
@@ -157,7 +161,18 @@ Summarize content status:
 - Missing content
 - Content risks or sensitivities
 
-Mention source files from `wiki/raw/content/` and `wiki/raw/inspiration/` when applicable.
+Mention source files from `wiki/raw/content/`, `wiki/raw/inspiration/`, and `wiki/raw/research/` when applicable.
+
+### `research.md`
+
+Initialize the research memory:
+
+- Research scope and expert lens
+- User-provided research sources from `wiki/raw/research/`
+- Meaningful findings that already affect strategy, content, design, SEO, positioning, technical choices, or future decisions
+- Open research questions
+
+Do not blindly catalog everything discovered during web research. Preserve synthesized findings only when they are meaningful to the project. Cite sources for web/current claims, label agent inference, note confidence or uncertainty, and ask the user before filing findings whose relevance is unclear.
 
 ### `technical-architecture.md`
 

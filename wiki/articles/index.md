@@ -12,6 +12,7 @@ Update this file whenever wiki pages are created, renamed, removed, or meaningfu
 - [Design Direction](design-direction.md): Visual strategy, inspiration, tone, color, typography, layout, interaction, and accessibility guidance.
 - [Content Inventory](content-inventory.md): Raw content sources, extracted facts, adapted copy ideas, missing content, and content risks.
 - [Technical Architecture](technical-architecture.md): Implementation approach, hosting assumptions, directory conventions, assets, browser support, and build steps.
+- [Research](research.md): Synthesized research questions, findings, sources, expert guidance, website implications, confidence, and follow-ups.
 - [Task Roadmap](task-roadmap.md): Current status, next tasks, backlog, completed work, and blocked items.
 - [Open Questions](open-questions.md): Unresolved strategy, content, design, technical, and deployment questions.
 
@@ -19,4 +20,4 @@ Update this file whenever wiki pages are created, renamed, removed, or meaningfu
 
 - [Raw Inspiration](../raw/inspiration/): User-provided visual and design references.
 - [Raw Content](../raw/content/): User-provided copy, notes, bios, resumes, project descriptions, and brand material.
-
+- [Raw Research](../raw/research/): User-provided market notes, competitor lists, PDFs, links, audience notes, SEO material, and industry context.

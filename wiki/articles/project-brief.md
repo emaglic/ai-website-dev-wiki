@@ -14,6 +14,10 @@ This page is the central definition of the website project. It should be initial
 
 - Placeholder: To be defined during `/setup`.
 
+## Expert Perspective For Research And Strategy
+
+- Placeholder: To be defined during `/setup`.
+
 ## Primary Goal
 
 - Placeholder: To be defined during `/setup`.
@@ -39,4 +43,3 @@ This page is the central definition of the website project. It should be initial
 - Keep this page concise and strategic.
 - Mention source files from `wiki/raw/` when facts are derived from raw material.
 - Label agent inferences clearly.
-

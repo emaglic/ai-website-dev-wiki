@@ -7,6 +7,7 @@ This repository is a reusable template for building websites with AI assistance 
 - `wiki/raw/` contains user-provided source material. Treat these files as source-of-truth input and do not modify them unless explicitly asked.
 - `wiki/raw/inspiration/` contains design references, screenshots, mood boards, color palettes, layout references, component inspiration, and other visual material.
 - `wiki/raw/content/` contains raw content such as resumes, bios, project descriptions, service notes, copy drafts, or brand material.
+- `wiki/raw/research/` contains user-provided research sources such as market notes, competitor lists, PDFs, articles, links, audience notes, SEO material, and industry context.
 - `wiki/articles/` contains the LLM-managed project wiki. Agents maintain these files as the project memory.
 - `site/` contains the actual website. Put all implementation files here unless the project wiki documents a strong reason otherwise.
 - `.agents/skills/setup/SKILL.md` contains the repo-local `/setup` workflow.
@@ -14,9 +15,9 @@ This repository is a reusable template for building websites with AI assistance 
 
 ## Operating Rhythm
 
-Before meaningful work, read `wiki/articles/index.md`, `wiki/articles/log.md`, and the wiki pages relevant to the task. Check `wiki/raw/` when the task involves content or design direction.
+Before meaningful work, read `wiki/articles/index.md`, `wiki/articles/log.md`, and the wiki pages relevant to the task. Check `wiki/raw/` when the task involves content, design direction, or research.
 
-Before project-specific website, content, design, wiki strategy, or site implementation work, verify whether the wiki has enough project-specific information to proceed. Read the starter project articles: `project-brief.md`, `design-direction.md`, `content-inventory.md`, `technical-architecture.md`, `task-roadmap.md`, `open-questions.md`, `log.md`, and `decisions.md`. Treat setup as incomplete when the wiki is still boilerplate or lacks a minimum project definition: website type, owner or brand, industry or field, primary goal, target audience, likely pages or sections, chosen stack or deployment assumption, and a setup log entry. Placeholder-heavy starter articles or a roadmap saying setup has not been run mean setup is incomplete. If setup is incomplete, tell the user the project wiki still needs `/setup` and ask whether they want to run it now. If the wiki is partially initialized but lacks information needed for the current task, ask focused follow-up questions or offer to resume `/setup`. Template-maintenance work may proceed before setup when the user is explicitly improving the template itself.
+Before project-specific website, content, design, research, wiki strategy, or site implementation work, verify whether the wiki has enough project-specific information to proceed. Read the starter project articles: `project-brief.md`, `design-direction.md`, `content-inventory.md`, `technical-architecture.md`, `research.md`, `task-roadmap.md`, `open-questions.md`, `log.md`, and `decisions.md`. Treat setup as incomplete when the wiki is still boilerplate or lacks a minimum project definition: website type, owner or brand, industry or field, expert perspective for research and strategy, primary goal, target audience, likely pages or sections, chosen stack or deployment assumption, and a setup log entry. Placeholder-heavy starter articles or a roadmap saying setup has not been run mean setup is incomplete. If setup is incomplete, tell the user the project wiki still needs `/setup` and ask whether they want to run it now. If the wiki is partially initialized but lacks information needed for the current task, ask focused follow-up questions or offer to resume `/setup`. Template-maintenance work may proceed before setup when the user is explicitly improving the template itself.
 
 After meaningful work, update the affected wiki articles, record durable decisions in `wiki/articles/decisions.md`, update `wiki/articles/task-roadmap.md`, append to `wiki/articles/log.md`, and update `wiki/articles/index.md` when wiki pages change meaningfully.
 
@@ -31,6 +32,14 @@ The `/setup` workflow is an actual repo-local skill at `.agents/skills/setup/SKI
 The wiki is project memory, not a transcript. Keep articles concise, structured, cross-linked, and useful to future agents.
 
 When information comes from raw source files, mention the source file. When something is an inference, label it as an inference.
+
+## Research Standards
+
+Project-specific research should happen only after `/setup` has initialized the project wiki, because setup defines the website type, field, audience, goals, and expert lens. When the user asks research-related questions after setup, act as an expert in the relevant documented field and preserve only meaningful synthesized findings in `wiki/articles/research.md`.
+
+Support both user-provided source material from `wiki/raw/research/` and web/current research when appropriate. Do not blindly catalog search results. Cite sources for web/current claims, label agent inference, note confidence or uncertainty, and ask the user before filing findings whose relevance is unclear.
+
+Use `wiki/raw/research/` for market, competitor, audience, SEO, industry, and source-document research. Use `wiki/raw/inspiration/` for visual and design references.
 
 ## Website Standards
 

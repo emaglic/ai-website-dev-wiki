@@ -7,6 +7,7 @@ This repository is a reusable template for building websites with AI assistance 
 - `wiki/raw/` contains user-provided source material. Treat these files as source-of-truth input and do not modify them unless the user explicitly asks.
 - `wiki/raw/inspiration/` contains design references, screenshots, mood boards, color palettes, layout references, component inspiration, and other visual material.
 - `wiki/raw/content/` contains raw content such as resumes, bios, project descriptions, service notes, copy drafts, or brand material.
+- `wiki/raw/research/` contains user-provided research sources such as market notes, competitor lists, PDFs, articles, links, audience notes, SEO material, and industry context.
 - `wiki/articles/` contains the LLM-managed project wiki. Agents own these files and must keep them current.
 - `site/` contains the actual website. Put HTML, CSS, JavaScript, assets, framework code, and build files here unless there is a strong project-specific reason otherwise.
 - `.agents/skills/setup/SKILL.md` contains the repo-local `/setup` workflow.
@@ -14,17 +15,17 @@ This repository is a reusable template for building websites with AI assistance 
 
 ## Before Meaningful Work
 
-Before doing meaningful website, content, design, or strategy work:
+Before doing meaningful website, content, design, research, or strategy work:
 
 1. Read `wiki/articles/index.md`.
 2. Read `wiki/articles/log.md`.
-3. Read relevant wiki articles such as `project-brief.md`, `design-direction.md`, `content-inventory.md`, `technical-architecture.md`, `task-roadmap.md`, `decisions.md`, and `open-questions.md`.
-4. Check `wiki/raw/` for new source material when the task involves content or design direction.
+3. Read relevant wiki articles such as `project-brief.md`, `design-direction.md`, `content-inventory.md`, `technical-architecture.md`, `research.md`, `task-roadmap.md`, `decisions.md`, and `open-questions.md`.
+4. Check `wiki/raw/` for new source material when the task involves content, design direction, or research.
 5. Check `.agents/locks/` before editing files in `wiki/articles/` or `site/`.
 
 ## Project Readiness Preflight
 
-Before doing meaningful website, content, design, wiki strategy, or site implementation work, verify whether the wiki has enough project-specific information to proceed.
+Before doing meaningful website, content, design, research, wiki strategy, or site implementation work, verify whether the wiki has enough project-specific information to proceed.
 
 Start by reading the starter project articles:
 
@@ -32,6 +33,7 @@ Start by reading the starter project articles:
 - `wiki/articles/design-direction.md`
 - `wiki/articles/content-inventory.md`
 - `wiki/articles/technical-architecture.md`
+- `wiki/articles/research.md`
 - `wiki/articles/task-roadmap.md`
 - `wiki/articles/open-questions.md`
 - `wiki/articles/log.md`
@@ -39,7 +41,7 @@ Start by reading the starter project articles:
 
 Treat `/setup` as not completed when the wiki is still boilerplate or lacks the minimum project definition needed for real work. Signals include:
 
-- `project-brief.md` does not identify the website type, owner or brand, industry or field, primary goal, target audience, and likely pages or sections.
+- `project-brief.md` does not identify the website type, owner or brand, industry or field, expert perspective for research and strategy, primary goal, target audience, and likely pages or sections.
 - `technical-architecture.md` does not identify a chosen stack or deployment assumption.
 - `task-roadmap.md` says project-specific setup has not been run.
 - The key project articles still mostly contain placeholder lines such as `Placeholder:` or `To be defined during /setup`.
@@ -47,7 +49,7 @@ Treat `/setup` as not completed when the wiki is still boilerplate or lacks the 
 
 The wiki content is the primary readiness signal. A setup log entry is useful supporting evidence, but it is not enough if the core articles still lack real project details.
 
-If `/setup` has not been completed, do not proceed with project-specific website/wiki work. Tell the user that this template still needs `/setup` to initialize the project wiki, then ask whether they want to run `/setup` now.
+If `/setup` has not been completed, do not proceed with project-specific website, wiki, or research work. Tell the user that this template still needs `/setup` to initialize the project wiki, then ask whether they want to run `/setup` now.
 
 If the wiki is partially initialized but lacks information needed for the current task, ask focused follow-up questions or offer to resume `/setup` to fill the missing fields before continuing.
 
@@ -76,6 +78,20 @@ Keep wiki articles concise, structured, and useful to future agents. Use markdow
 When information comes from raw source files, mention the source file. When something is an agent inference, label it as an inference.
 
 Do not let the wiki become a transcript. Synthesize important context, decisions, open questions, risks, and progress.
+
+## Research Standards
+
+Project-specific research is allowed only after `/setup` has initialized the project wiki, because research guidance depends on the website type, field, audience, goals, and expert lens captured during setup.
+
+When the user asks research-related questions after setup:
+
+1. Act as an expert in the relevant field documented in `project-brief.md`, including any specific expertise lens requested during `/setup`.
+2. Support both user-provided source material from `wiki/raw/research/` and web/current research when appropriate.
+3. Preserve only meaningful synthesized findings in `wiki/articles/research.md` when they may affect strategy, content, design, SEO, positioning, technical choices, or future decisions.
+4. Do not blindly catalog search results. Summarize what matters, cite sources for web/current claims, label agent inference, and note confidence or uncertainty.
+5. If it is unclear whether a finding is relevant or useful enough to keep, ask the user whether to file it in the wiki.
+
+Use `wiki/raw/research/` for source material and `wiki/articles/research.md` for synthesized research memory. Use `wiki/raw/inspiration/` for visual and design references, even when those references are competitors or examples.
 
 ## Website Development Standards
 
