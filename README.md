@@ -173,6 +173,22 @@ For reviews, use the same pattern with `.agents/skills/self-review/SKILL.md` or 
 
 You can use more than one agent tool or switch later. Ask the agent to follow only the **Agent Tool Adaptation** section of `.agents/skills/setup/SKILL.md`, without initializing the wiki. It preserves project knowledge and existing adapters. No global installation or provider account configuration is required by the template; your chosen agent application still needs its own normal setup.
 
+## Recommended Model Usage
+
+The template author's recommended workflow is **ChatGPT 6.1 Sol (GPT-6.1 Sol) at medium or high effort for planning implementations**, then **the same model at light effort for building from a clear plan**. Use planning to settle requirements, layout, reusable structures, and implementation steps; give the implementation agent that plan and the relevant wiki context.
+
+The alternatives below are suggested starting points for similar work, not benchmark-proven equivalents. Model capabilities and effort scales differ between providers. These recommendations are optional and do not configure or restrict which model the template uses.
+
+| Provider | Model | Planning implementations | Coding from a clear plan |
+| --- | --- | --- | --- |
+| OpenAI | GPT-6.1 Sol | Medium or high reasoning effort | Light effort; select `low` where the tool uses the documented API label. [Model and supported efforts](https://developers.openai.com/api/docs/models/gpt-6.1-sol). |
+| Anthropic | Claude Opus 5.5 | Medium or high effort | Low effort for small, well-defined implementation steps; raise to medium for more involved work. [Claude effort guidance](https://platform.claude.com/docs/en/build-with-claude/effort). |
+| Google | Gemini 3.1 Pro (preview) | Medium or high thinking level | Low thinking level for well-defined steps; raise it when the task needs more reasoning. [Gemini thinking levels](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/thinking). |
+
+Here, "light" describes the author's preferred lower-effort implementation setting; the exact label depends on the application. A provider's API may expose controls that your chat or coding interface does not. Check the model and settings available in your tool rather than assuming every interface offers this table's options.
+
+Keep implementation tasks focused. If the plan is incomplete, requirements change, or debugging becomes difficult, return to medium/high effort to resolve the uncertainty. Lower effort does not replace checking the result or reviewing the site. These model examples and supported settings were checked against the linked provider documentation on November 6, 2026; revisit them as models and tools change.
+
 ## Getting Started With `/setup`
 
 When you are ready to turn this generic template into a real website project, ask your AI agent to run:
