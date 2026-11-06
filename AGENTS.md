@@ -2,16 +2,71 @@
 
 This repository is a reusable template for building websites with AI assistance and a persistent LLM-managed markdown wiki. It is intentionally generic. Do not personalize it for a specific website until the user asks to run `/setup`.
 
+## Provider-Neutral Instructions
+
+This file is the authoritative repository guide for every agent tool and provider. `CLAUDE.md`, `GEMINI.md`, and any future tool-specific entry files are small adapters that direct agents here; do not duplicate the rules into separate provider guides.
+
+Keep reusable workflows in `.agents/skills/`. Native skill discovery, command syntax, repository access, browser tools, and delegation depend on the actual application and version, not just the model provider. Read the requested `SKILL.md` explicitly if native invocation is unavailable. A request to read and run `.agents/skills/setup/SKILL.md` is equivalent to invoking `/setup`; merely reading instructions or adapting an agent tool is not permission to initialize the wiki.
+
+During user-requested setup, follow the setup skill's agent adaptation step. Keep adaptations repo-local, preserve existing user configuration and adapters for other tools, and leave shared rules unchanged when switching tools. Adding support for another agent later must not reset project knowledge or rerun website initialization. Reviewers may use a different provider from the requesting agent; give them the same requirements and shared instructions, using manual handoff where needed.
+
 ## Core Structure
 
+- `input/assets/` and `input/mockups/` are mutable, disposable user working directories for website assets and design mockups, including Figma exports. Their contents may change or disappear at any time.
+- `temp/` is an ephemeral handoff area for user-provided screenshots, draft proposals, and other temporary material. Users may delete its contents at any time.
+- `output/` contains ephemeral files explicitly requested by the user for human consumption, such as reports or implementation plans. Website development files belong in `site/`.
 - `wiki/raw/` contains user-provided source material. Treat these files as source-of-truth input and do not modify them unless the user explicitly asks.
 - `wiki/raw/inspiration/` contains design references, screenshots, mood boards, color palettes, layout references, component inspiration, and other visual material.
 - `wiki/raw/content/` contains raw content such as resumes, bios, project descriptions, service notes, copy drafts, or brand material.
 - `wiki/raw/research/` contains user-provided research sources such as market notes, competitor lists, PDFs, articles, links, audience notes, SEO material, and industry context.
 - `wiki/articles/` contains the LLM-managed project wiki. Agents own these files and must keep them current.
+- `wiki/temp/` contains ephemeral agent-generated working files, including review briefs and feedback. Contents are ignored by Git except `.gitkeep`.
 - `site/` contains the actual website. Put HTML, CSS, JavaScript, assets, framework code, and build files here unless there is a strong project-specific reason otherwise.
 - `.agents/skills/setup/SKILL.md` contains the repo-local `/setup` workflow.
-- `.agents/locks/` contains temporary repo-local coordination locks for concurrent agent work.
+- `.agents/skills/self-review/SKILL.md` contains the repo-local independent code-review workflow.
+- `.agents/skills/uiux-self-review/SKILL.md` contains the repo-local independent UI/UX review workflow.
+- `.agents/locks/` contains temporary repo-local coordination locks for work in `site/`. Wiki articles use modification checks and merging instead of locks.
+
+## Mutable Design Inputs
+
+Use `input/` for the user's evolving design workspace; use top-level `temp/` for one-off handoffs. Only `input/assets/.gitkeep` and `input/mockups/.gitkeep` are tracked; other contents, including additional subdirectories, are ignored by Git.
+
+- Reinspect relevant inputs when asked to use them; do not assume they match a previously viewed version.
+- Copy assets needed by the website into appropriate subdirectories under `site/`. Website code must reference those copies, never files in `input/`. Leave user originals intact unless explicitly asked to move, edit, or delete them.
+- Use mockups to guide implementation. If a particular version is valuable as a lasting reference, copy it into `wiki/raw/inspiration/` with a descriptive version-specific filename, without overwriting retained references. Preserve useful conclusions in the appropriate wiki articles.
+- Wiki articles must never link to files in `input/` or rely on their continued availability. Cite retained copies under `site/` or `wiki/raw/` when source references are needed. Tell the user which files were copied and where.
+- Follow existing setup readiness and concurrency rules for project-specific work. The presence of design inputs does not authorize running `/setup`.
+
+## Human-Requested Deliverables
+
+Write files to `output/` when the user requests a human-readable deliverable, such as a project report, analysis, or implementation plan, unless they specify another destination. Tell the user where the deliverable was saved.
+
+- `output/` is not a development workspace. All website code, styles, scripts, assets, configuration, build files, and other site development files belong in `site/`. A request to build or change the website does not mean to place development files in `output/`.
+- Internal agent working files belong in `wiki/temp/`; `output/` is for user-requested files intended for human consumption.
+- Users may move, edit, or delete output files at any time. Never link wiki articles to files in `output/` or make the website depend on them.
+- Preserve lasting project knowledge separately in the appropriate wiki articles under the normal readiness, maintenance, and concurrency rules. A human-readable report does not replace durable project memory. Template-maintenance deliverables must leave project wiki articles and logs untouched.
+- Leave deliverables for the user to manage unless asked otherwise. Contents are ignored by Git except `output/.gitkeep`, which includes the directory in new clones.
+
+## Temporary User Handoffs
+
+When the user asks you to review material in `temp/`, inspect the relevant files. Screenshots can show how current website changes look; proposals can inform future work.
+
+- Preserve information valuable for future reference in the appropriate `wiki/articles/` pages. Keep proposals distinguishable from approved plans or decisions.
+- If the original file is worth retaining, copy it into the appropriate `wiki/raw/` subdirectory: visual references into `inspiration/`, content and proposals into `content/`, and research sources into `research/`. Use a descriptive filename and avoid overwriting existing sources.
+- Wiki articles must be self-contained or reference retained files in the wiki. Never link to files in `temp/` or depend on their continued availability. When citing a source file, cite its retained copy.
+- Do not automatically archive everything in `temp/`. Retain what matters to the task and tell the user what you preserved and where.
+- Leave temporary originals for the user to manage unless asked to delete them. Temporary contents are ignored by Git; only `temp/.gitkeep` is tracked to include the directory in new clones.
+- Follow the existing setup readiness and wiki concurrency rules before writing project-specific wiki content. Material in `temp/` does not authorize running `/setup`.
+
+## Agent Working Files And Review Skills
+
+Use `wiki/temp/` for agent-generated working artifacts; top-level `temp/` is for human-provided handoffs. Neither location is durable wiki memory. Never link wiki articles to files in either temporary directory or depend on those files remaining available.
+
+When the user requests `/self-review` or a second-agent review, follow `.agents/skills/self-review/SKILL.md`. Prepare a review brief and hand it to a separate reviewer when available, or provide a portable prompt for a manual handoff. The reviewer inspects changes and reports findings without editing project files.
+
+For `/uiux-self-review`, follow `.agents/skills/uiux-self-review/SKILL.md` to review responsive behavior, touch and keyboard interactions, accessibility, design fidelity, and visual improvements. For both review skills, the requesting agent must explain the recommendations to the human user and ask which changes they want implemented. Wait for explicit approval of selected recommendations before applying feedback; the review request or earlier build authorization does not supply that approval. Keep suggestions distinguishable from approved decisions.
+
+The requesting agent owns cleanup: after receiving and processing feedback, acting on approved recommendations or preserving useful information as appropriate, and no longer needing the artifacts, delete only that review's working files. The reviewer must not delete them. Leave incomplete reviews, including those awaiting a user decision, available for resumption. Template-maintenance reviews must not initialize or update project wiki articles or logs.
 
 ## Before Meaningful Work
 
@@ -20,8 +75,8 @@ Before doing meaningful website, content, design, research, or strategy work:
 1. Read `wiki/articles/index.md`.
 2. Read `wiki/articles/log.md`.
 3. Read relevant wiki articles such as `project-brief.md`, `design-direction.md`, `content-inventory.md`, `technical-architecture.md`, `research.md`, `task-roadmap.md`, `decisions.md`, and `open-questions.md`.
-4. Check `wiki/raw/` for new source material when the task involves content, design direction, or research.
-5. Check `.agents/locks/` before editing files in `wiki/articles/` or `site/`.
+4. Check `wiki/raw/` for new source material when the task involves content, design direction, or research, and inspect relevant `input/assets/` and `input/mockups/` files when working with user design inputs.
+5. Follow the wiki modification-check workflow before editing `wiki/articles/`, and check `.agents/locks/` before editing `site/`.
 
 ## Project Readiness Preflight
 
@@ -99,6 +154,31 @@ All website implementation work goes inside `site/`.
 
 Choose the simplest technical architecture that satisfies the project goals. If the user does not have a strong preference and no special requirements exist, prefer static HTML, CSS, and JavaScript for portability and easy FTP deployment.
 
+These are defaults, not a mandatory architecture; adapt when the user's requirements justify a different approach:
+
+- Do not assume Node.js, npm, or other development tools are installed. Do not run package installs or introduce a build pipeline by default. Prefer browser-ready libraries loaded through ordinary script and stylesheet tags. If tooling is needed, explain why and establish the user's preference before introducing it; an explicitly chosen stack can provide that authorization.
+- Prefer downloading needed third-party libraries and serving them locally under `site/assets/vendor/` over relying on CDN URLs at runtime. Use official distribution sources, retain license notices, and record versions and sources in the initialized project's technical notes. Avoid unnecessary dependencies.
+- Keep files organized within `site/`, for example `assets/css/`, `assets/js/`, `assets/images/`, `assets/video/`, and `assets/fonts/`. Create directories as needed rather than scaffolding unused structure.
+- Prefer separate CSS and JavaScript files over embedding styles and scripts in HTML. Split JavaScript by meaningful feature or reusable component when helpful. Use deferred loading, on-demand loading, or selective preloading as appropriate; do not preload every file by default.
+- For repeated structures such as portfolio projects, consider reusable rendering logic with content in separate `.js` files containing objects and arrays. Prefer ordinary script tags, with content loaded before the rendering code, when direct-file previews matter. Keep data under a single clear namespace. JSON remains an option when its loading requirements suit the project; do not add abstraction to pages that are simpler as HTML.
+- Preserve accessibility, useful document structure, and discoverability when choosing what to render with JavaScript. Check direct-file compatibility rather than assuming it: modules, fetch requests, and other features may require HTTP.
+
+### Responsive Design
+
+Build sites to remain usable across mobile, tablet, and desktop displays, including widths between supplied mockups and changes in orientation. Follow the user's explicit responsive directions and mockups as closely as possible.
+
+When responsive guidance is absent or incomplete, make small, proportionate adjustments to layout, spacing, typography, navigation, and media so content remains readable and controls usable. Preserve the intended design and content hierarchy; ordinary gap-filling does not require approval for each adjustment.
+
+If supplied directions contradict one another or would cause layout or usability problems, explain the specific conflict and its visible effect in plain language, offer practical options, and ask for guidance before deciding the conflicting behavior. Continue independent work where possible rather than silently overriding an explicit requirement.
+
+Verify representative narrow, medium, and wide viewports, plus intermediate widths where the layout changes, using available browser tools. Check for unintended horizontal overflow, clipped or overlapping content, unreadable text, distorted media, and unusable navigation or controls. Report what was checked and any limits; do not claim device testing that was not performed.
+
+### Local Preview
+
+When a site is ready for the user to test, offer to start a local preview server if the environment supports it. Explain that it provides a local browser preview and ask whether the user wants it started, unless they have already authorized it. Do not assume Node.js or npm is available or install a runtime just to preview the site; inspect available tools and use a suitable existing server.
+
+Serve only `site/`, bind to the local loopback interface, and provide the working URL and how to stop the server. Check for an existing appropriate preview before starting another, track any process you start, and do not terminate unrelated processes. If no suitable server is available, explain practical preview options and any direct-file limitations in plain language. A preview server is a development convenience, not a production hosting requirement.
+
 Prioritize clear content hierarchy, a strong first impression, mobile responsiveness, fast loading, accessible markup, maintainable structure, visual consistency, and realistic content usage.
 
 When inspiration exists in `wiki/raw/inspiration/`, use it to inform layout, visual tone, typography, color, spacing, and interaction choices. When content exists in `wiki/raw/content/`, adapt it into website-ready copy instead of copying raw material verbatim unless that is clearly appropriate.
@@ -107,13 +187,33 @@ When inspiration exists in `wiki/raw/inspiration/`, use it to inform layout, vis
 
 Assume users may not be developers. Explain technical choices in plain language, ask focused questions when needed, and handle implementation work directly.
 
+During setup, ask about comfort with HTML, CSS, and JavaScript and preferred explanation style, then record concise preferences in the project brief's User Collaboration section. Future agents should read and use those preferences. For users requesting plain language, focus on visible behavior, user impact, choices, and tradeoffs rather than unsolicited code walkthroughs. For intermediate users, add useful technical context selectively. For experienced users who want technical explanations, provide relevant implementation detail and verification evidence.
+
+Do not infer experience from a job title or treat experience as a fixed label. Follow explicit preferences over assumptions, adapt when the user requests a different level of detail, and use plain language when preferences are unknown. Communication style does not reduce implementation standards or change authorization and review-approval requirements.
+
 Once the website type and industry are known, act as an expert in that domain as well as a wiki manager and website developer. Help make the website strategically better, not merely technically complete.
 
-## Concurrency And File Locks
+## Concurrency
 
-Agents may work in parallel on this repository. Coordinate before editing files in `wiki/articles/` or `site/` by using repo-local lock files in `.agents/locks/`. Do not use global lock files or system-level coordination.
+Agents may work in parallel. Wiki articles use modification checks and merging; website development uses repo-local locks. Do not use global lock files or system-level coordination.
 
-Before editing `wiki/articles/` or `site/`:
+### Wiki Articles: Check, Reread, And Merge
+
+Do not create hard locks for `wiki/articles/`, including during `/setup`.
+
+1. When reading an article, record its last-modified time (preferably UTC with full available precision) alongside the content you read. A content hash is recommended as an additional check because timestamps can miss changes. If the file changes during the read, reread it to establish a consistent baseline.
+2. Immediately before each write, compare the current last-modified time with that baseline, and compare the hash if recorded. Treat a newly created or deleted file as a change too; do not overwrite an unexpected new file or recreate a deleted one without reassessing.
+3. If anything changed since your read, reread the current file and reevaluate how and where to fold in your information. Preserve other agents' contributions and resolve duplication or conflicting statements deliberately. Repeat the check against this new baseline before writing.
+4. Prefer narrow, context-sensitive patches that fail if the expected text has changed. If a patch fails, reread and merge again; never force a stale replacement or write an old full-file snapshot over newer content.
+5. Reread the result after writing to verify your intended change and preservation of existing contributions. If you detect interference, reconcile against the latest content instead of restoring your old version. Refresh your baseline for subsequent writes. Ask the user only when conflicting meaning or intent cannot be resolved from available context.
+
+Apply this workflow to every article write, including `log.md`, `decisions.md`, `task-roadmap.md`, and `index.md`. For log entries, preserve all existing entries, avoid duplicates, and use a timestamp with timezone and an agent or task identifier to distinguish concurrent work. Fold the entry into chronological order using the latest file contents. Logs explain completed changes; they do not reserve files or replace per-file checks. Template-maintenance work must not initialize or update project wiki articles or logs.
+
+Modification checks and context-sensitive patches reduce conflicts but do not provide an atomic transaction across files. Keep edits small and reconcile related wiki pages when concurrent work affects their consistency.
+
+### Website Development: File Locks
+
+Before editing `site/`:
 
 1. Identify the files or directories you expect to modify.
 2. Check `.agents/locks/` for active locks that overlap those paths.

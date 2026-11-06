@@ -1,13 +1,13 @@
 ---
 name: setup
-description: Use when the user asks to run /setup or initialize this website wiki template for a real website project. This repo-local workflow gathers project details, initializes the wiki, and prepares the site roadmap.
+description: Initialize this website wiki template when the user requests /setup, including repo-local adaptation to their agent tool, or perform only agent adaptation when explicitly requested without reinitializing an existing project.
 ---
 
 # Repo-Local `/setup` Workflow
 
 Use this workflow when the user asks for `/setup`. This file is intentionally stored inside the repository so the template remains portable and self-contained. Do not create, install, or require global, system-wide, user-profile, or machine-level skills.
 
-The goal of `/setup` is to initialize this generic website-wiki template for a specific website project. Do not run this workflow unless the user explicitly asks for `/setup`.
+The goal of `/setup` is to initialize this generic website-wiki template for a specific website project. Run initialization only when the user explicitly asks for `/setup` or asks you to read and run this file for project initialization. If the user only asks to adapt an agent tool, perform only the agent adaptation section; do not run the project questionnaire or initialize/reset wiki articles. Maintaining the template itself never runs initialization.
 
 ## Role During Setup
 
@@ -24,24 +24,62 @@ Assume the user may not be a developer. Ask focused questions in plain language 
 - Ask questions in small batches. Do not overwhelm the user.
 - Keep the project generic until the user provides specifics.
 - Prefer static HTML, CSS, and JavaScript when the user wants FTP-friendly deployment and has no special technical requirements.
+- Do not assume Node.js/npm is available or introduce package installs by default. Follow the agent guide's website standards for local libraries, organized assets, separate CSS/JS, and reusable rendering with separate JavaScript content objects where helpful. These are defaults that can adapt to project needs.
 - Treat `wiki/raw/` as source-of-truth input. Do not modify raw files unless explicitly asked.
+- Treat `input/` as a mutable user design workspace. Follow the agent guide's copy-and-retain rules; never link project wiki articles to input files.
 - Label inferences clearly when writing wiki articles.
-- Coordinate with `.agents/locks/` before editing `wiki/articles/` or `site/`.
+- Use the agent guide's modification-check, reread, and merge workflow for every wiki article write. Use `.agents/locks/` only for work in `site/`.
 
 ## Initial Checks
 
 Before asking project questions:
 
-1. Read `AGENTS.md` or the relevant agent guide.
+1. Read the authoritative `AGENTS.md`, even if you arrived through a tool-specific entry file.
 2. Read `wiki/articles/index.md`.
 3. Read `wiki/articles/log.md`.
-4. Inspect `wiki/raw/inspiration/`, `wiki/raw/content/`, and `wiki/raw/research/` for existing source files.
-5. Check `.agents/locks/` for overlapping locks on `wiki/articles/`.
-6. Create a narrow lock for the wiki articles you will update.
+4. Inspect `wiki/raw/inspiration/`, `wiki/raw/content/`, and `wiki/raw/research/` for existing source files, and `input/assets/` and `input/mockups/` for current user design inputs.
+5. Record last-modified times when reading wiki articles, preferably with content hashes, and follow the agent guide's concurrency workflow immediately before and after each write. Do not create wiki locks.
+
+## Agent Tool Adaptation
+
+For `/setup`, complete this step before the project questionnaire. For an explicit request to add or switch agent tools, run this section alone and preserve the existing project wiki. Adapting a tool is independent of project initialization.
+
+1. Identify the actual application and, when available, its version from reliable session context. Do not infer it from a model name, API provider, or the presence of `CLAUDE.md`/`GEMINI.md`; all clones can contain those files. If unclear, ask which tool the user uses, with examples such as Codex, Claude Code, Gemini CLI, or another editor/chat application. A project can support several tools at once.
+2. Inspect existing repository configuration before writing. Keep `AGENTS.md` and `.agents/skills/` authoritative. Preserve user settings and unrelated files; do not overwrite a conflicting command or skill. Reuse adapters that already point at the correct shared workflow. Ask about actual conflicts instead of replacing custom behavior.
+3. Check documented discovery behavior for the tool/version, using official documentation when verification is needed. Current starting points:
+
+   | Tool | Repository instructions | Shared workflow access |
+   | --- | --- | --- |
+   | Codex | `AGENTS.md` | `.agents/skills/` is a native discovery location; avoid redundant adapters. |
+   | Claude Code | `CLAUDE.md` imports `@AGENTS.md` | Where needed, add thin skills under `.claude/skills/<name>/SKILL.md` pointing to the canonical workflow. |
+   | Gemini CLI | `GEMINI.md` directs the agent to `AGENTS.md` | Versions supporting the `.agents/skills/` alias need no duplicate skills; verify discovery. |
+   | Other tools | A documented repo-local instruction entry, if supported | Use a documented local adapter or explicit file-based instructions. Never invent configuration or assume native slash commands. |
+
+4. When native registration needs an adapter, create only the necessary small files. For a Claude Code skill wrapper, use YAML frontmatter with the canonical skill's `name` and an accurate `description`, followed by an instruction such as: "Read and follow `.agents/skills/self-review/SKILL.md` from the repository root. That file is authoritative; do not substitute this adapter for its workflow." Generate wrappers for the three shared skills as needed, changing the target path and description for each. Do not copy workflow bodies, use symlinks that require special platform permissions, change global settings, install tools, or relax execution permissions. Native invocation is a convenience, not a prerequisite.
+5. Verify generated files and target paths and, where supported, check actual skill discovery. If a reload or restart is needed, explain it. Do not claim runtime compatibility based only on file creation. If the environment cannot register skills or access the repository, explain what the user must open or attach and provide the explicit instruction: "Read AGENTS.md, then read and follow .agents/skills/<name>/SKILL.md." Do not claim adaptation can grant missing capabilities.
+6. Report detected tools, files added or reused, invocation instructions, and any unverified behavior. During project initialization, record useful tool and invocation notes in `technical-architecture.md` with normal concurrency checks. For adaptation alone, leave wiki articles and logs untouched unless the user asks to update them. Later tool changes must not erase existing adapters or reset the project.
+
+Official discovery references: [Codex skills](https://learn.chatgpt.com/docs/build-skills), [Claude Code skills](https://code.claude.com/docs/en/skills), [Claude Code shared instructions](https://code.claude.com/docs/en/memory), [Gemini CLI context](https://geminicli.com/docs/cli/gemini-md/), and [Gemini CLI skills](https://geminicli.com/docs/cli/tutorials/skills-getting-started/). Verify these rather than assuming other products from the same provider behave identically.
 
 ## Setup Questionnaire
 
 Ask these questions in batches of 3 to 5. Adapt wording to the user, but preserve the intent.
+
+### Experience And Communication
+
+Ask early, alongside the first project questions, unless the user has already provided this information:
+
+"How comfortable are you with HTML, CSS, and JavaScript: new to code, comfortable with some edits, or experienced? Would you prefer explanations focused on what visitors see and can do, a mix of plain language and technical detail, or detailed code explanations?"
+
+Experience and explanation preference can differ. If useful, ask one focused follow-up about differences between HTML/CSS and JavaScript comfort or whether the user wants to learn while building. Do not turn this into a technical quiz, infer ability from a job title, or require an answer before continuing. If unanswered, use plain language and mark the preference as unspecified rather than inventing an experience level.
+
+Use the response throughout setup and future collaboration:
+
+- For users new to code or requesting plain language, explain visible behavior, user impact, options, and tradeoffs. Avoid unsolicited walkthroughs of variables, functions, or implementation internals.
+- For intermediate users or a mixed preference, lead with behavior and add selective technical detail relevant to their question or decision.
+- For experienced users requesting technical detail, include relevant implementation choices, code structure, constraints, and verification evidence without explaining basics unnecessarily.
+
+Explicit communication preferences take priority over assumed experience. Users can request more or less detail at any time. These preferences affect communication, not implementation quality, architecture authorization, or approval requirements. During initialization, synthesize the preference in a **User Collaboration** section of `project-brief.md` so every provider's agent can use it; do not store a questionnaire transcript.
 
 ### Project Identity
 
@@ -80,7 +118,7 @@ Ask these questions in batches of 3 to 5. Adapt wording to the user, but preserv
 ### Technical Approach
 
 14. What technical approach should we use?
-    - Static HTML/CSS/JS
+    - Static HTML/CSS/JS (default; no Node.js/npm or build step required)
     - React, Vue, Svelte, or another app framework
     - Static site generator
     - Component framework
@@ -129,6 +167,7 @@ If the user cannot answer every setup question, record known answers, mark unkno
 
 Record the central project definition:
 
+- User collaboration: self-described HTML/CSS/JavaScript comfort, preferred explanation style, and any useful differences by topic or interest in learning; keep unspecified answers explicitly unknown
 - Website type
 - Website owner or brand
 - Industry or field
@@ -179,11 +218,15 @@ Do not blindly catalog everything discovered during web research. Preserve synth
 Document implementation decisions:
 
 - Chosen stack
+- Agent tools, repo-local adapters, workflow invocation, and any discovery limitations established during setup
 - Hosting/deployment assumptions
 - Directory conventions
 - Asset strategy
 - Browser/device support
 - Build steps, if any
+- Preview approach and available tools, without assuming Node.js/npm; offer to start a local server when the site is ready to test, asking first unless already authorized
+- Local third-party library sources, versions, and licenses when used
+- Content organization and reusable rendering approach where helpful; separate JavaScript objects/arrays can avoid JSON fetching for direct-file previews
 
 If the user wants FTP-friendly deployment and no special technical requirements exist, recommend simple static HTML, CSS, and JavaScript.
 
@@ -238,9 +281,9 @@ Append a setup entry using this format:
 
 After `/setup` is complete:
 
-1. Remove any setup lock files you created.
+1. Verify the final wiki content against the latest concurrent contributions. If site work was also authorized, release any site locks you created after completing that work.
 2. Tell the user which wiki files were initialized.
 3. Explain the recommended next development step.
-4. Continue future work from the initialized wiki and the durable operating rules in `AGENTS.md` or `CLAUDE.md`.
+4. Continue future work from the initialized wiki and the authoritative operating rules in `AGENTS.md`; tool-specific entry files only route to that guide.
 
 The setup skill may remain in the repository for future reference, but ongoing agents should rely primarily on the initialized wiki.
