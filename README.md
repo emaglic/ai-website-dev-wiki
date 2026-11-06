@@ -1,22 +1,76 @@
 # AI Website Dev Wiki
 
-This repository is a reusable base project for building websites with AI assistance and a persistent markdown wiki.
+Turn your ideas, mockups, and content into a website with an AI development partner—and give that partner a place to remember how the project fits together.
 
-It starts intentionally generic. The idea is to give an AI coding agent a stable place to store project memory, source material, decisions, design direction, technical notes, and the actual website files as the project evolves.
+AI Website Dev Wiki is a reusable template for AI-assisted web development, from the first project brief through design, implementation, review, and deployment guidance. It brings your website files, design inputs, and project knowledge into one organized repository, with instructions that help agents work consistently across sessions and tools.
+
+You can start with no coding experience, bring years of web development experience, or fall anywhere in between. Describe what you want to build, share the materials you have, and let the agent help turn those into a practical plan and working website. The default approach uses static HTML, CSS, and JavaScript, so getting started does not require Node.js, npm, or backend infrastructure.
 
 ## What This Template Is For
 
-Use this project when you want to build a website with an AI assistant while keeping durable context inside the repository.
+Use this template to create a portfolio, business website, landing page, or another web project with AI assistance. Each project starts from its own copy: run `/setup`, answer a few batches of questions, and the agent builds a shared understanding of your goals before implementation begins.
 
-The wiki helps future agent sessions understand:
+**For designers and people new to development**, it provides a way to work from familiar materials: mockups, images, written content, and descriptions of how the site should look and behave. Agents explain choices in plain language, handle implementation, and ask for direction when requirements are unclear. You do not need to learn a framework just to get your ideas onto a page.
 
-- what website is being built
-- who it is for
-- what content and inspiration have been provided
-- what design and technical decisions have already been made
-- what work is done, next, blocked, or unresolved
+**For experienced developers**, it provides a reusable foundation for organizing AI work: durable requirements and decisions, a task roadmap, concurrency rules, and independent code and UI/UX review workflows. You can request technical explanations and choose a more complex architecture when your project calls for it.
 
-This avoids restarting from scratch every time a new AI session begins.
+The template helps you:
+
+- **Keep momentum between sessions.** Preserve important context so the next agent can pick up the work without making you repeat the entire brief.
+- **Build from your own design direction.** Supply assets and mockups, then have agents implement and adapt them across screen sizes.
+- **Get another perspective.** Request independent code or UI/UX feedback, understand the recommendations, and choose which changes to implement.
+- **Keep the project organized.** Separate website development, evolving design inputs, temporary handoffs, and requested reports or plans.
+- **Keep your options open.** Use shared instructions with different agent tools and providers, adapting repository-local integration where needed.
+
+### What Is An LLM Wiki?
+
+An LLM wiki is a collection of readable Markdown documents that an AI agent maintains as project memory. Here, those documents live in `wiki/articles/` and capture the website's goals, audience, design direction, content status, technical choices, research, decisions, and remaining work.
+
+Think of it as a project notebook that travels with the code. A chat conversation can become long, lose context, or end entirely; the wiki keeps useful knowledge in files that you and future agents can inspect. Agents are instructed to read the relevant pages before project work and update them as the project evolves.
+
+For example, if you decide that project images should open in a gallery, mobile navigation should use a particular pattern, and the site should remain easy to upload by FTP, those choices can be recorded alongside their reasons. A later session can read that context before making changes instead of guessing or asking you to explain everything again.
+
+The wiki stores concise, lasting knowledge rather than a transcript of every message. It does not give an agent automatic memory or guarantee that it will make the right decision; it gives agents an explicit, shared reference to consult. You stay in control of the direction while the project becomes easier to continue, review, and hand off.
+
+## Quick Start: Your First Project
+
+1. Create your own project repository from this template, then clone or download it to your computer. Keep each website project in its own copy.
+2. Open that project folder in your preferred AI coding tool and give the agent access to its files. You do not need Node.js or npm for the default static website workflow.
+3. Optionally add any materials you already have: website assets in `input/assets/`, design mockups in `input/mockups/`, and lasting copy, references, or research in the appropriate `wiki/raw/` folders. You can add more later; none of this is required to start.
+4. Ask the agent to initialize the project wiki with `/setup`. If your tool does not recognize that command, paste:
+
+   ```text
+   Read AGENTS.md, then read and run .agents/skills/setup/SKILL.md to initialize this website project.
+   ```
+
+5. Answer the agent's questions in small batches. It will adapt to your agent tool, learn what you are building and how you prefer explanations, then write the project wiki. You can say "I'm not sure" rather than inventing an answer.
+6. Review the agent's summary, correct anything it misunderstood, and ask it to start a specific piece of the website. Setup prepares the project memory and roadmap; the website is built afterward in `site/`.
+
+### Example Setup Conversation
+
+This abbreviated example shows the kind of exchange to expect; the agent adapts the questions to your project.
+
+> **You:** /setup
+>
+> **Agent:** What kind of website are we building, and who is it for? How comfortable are you with HTML, CSS, and JavaScript, and how would you like me to explain things?
+>
+> **You:** A portfolio for my graphic design work. I don't write code, so explain what visitors will see and do. I want potential clients to browse my projects and contact me.
+>
+> **Agent:** What pages or sections do you want? Do you have copy, images, or mockups, and what visual direction should I follow?
+>
+> **You:** Home, Work, About, and Contact. I've added a logo and project images to input/assets/ and a homepage mockup to input/mockups/. Keep the design minimal and adapt it for mobile where I haven't provided a mockup.
+>
+> **Agent:** I'll plan a static site you can upload later without a backend. What should visitors be able to do on Contact—for example, open an email link? I'll also ask about any missing content and constraints before finishing the wiki.
+>
+> **You:** An email link is fine. I still need to write the About text.
+>
+> **Agent:** The wiki is initialized with the project brief, design direction, content inventory, technical plan, and roadmap. The About copy is noted as missing. No hosting details are needed yet. The first implementation task is the homepage.
+>
+> **You:** Build the homepage using my mockup and assets.
+
+You can keep working with the same agent or start another session in the same project folder; the next agent should read `AGENTS.md` and the wiki before continuing. When a site is ready to test, the agent can offer a local preview. You can request `/self-review` or `/uiux-self-review` later and choose which recommendations to implement.
+
+For more detail, see [Using Different AI Agents](#using-different-ai-agents) and [Getting Started With `/setup`](#getting-started-with-setup).
 
 ## Project Structure
 
@@ -145,11 +199,13 @@ During `/setup`, the agent will ask focused questions about:
 - available content and inspiration
 - available research sources and the expert perspective agents should use
 - visual direction and brand constraints
-- preferred technical approach and hosting needs
+- preferred technical approach and constraints
 
 After that, the agent initializes the wiki with project-specific strategy, content notes, design direction, technical choices, open questions, and a roadmap.
 
 Your communication preferences are saved in the project brief so future agents can tailor explanations: visible behavior and plain language, a mix of practical and technical detail, or deeper code discussion. You can change your preference at any time. Coding experience is not required, and an experienced developer can still prefer concise, nontechnical explanations.
+
+You do not need to choose a host or provide domain or FTP details during setup. The agent assumes ordinary static hosting and leaves deployment specifics until you request help.
 
 Do not personalize this template for a specific website before running `/setup`. If an agent sees that the wiki is still mostly boilerplate or lacks the basic project definition needed for the task, it should pause project-specific work and ask whether you want to run `/setup` first.
 
@@ -157,7 +213,9 @@ Do not personalize this template for a specific website before running `/setup`.
 
 Website implementation belongs in `site/`.
 
-Unless the project needs a framework or special tooling, the default recommendation is simple static HTML, CSS, and JavaScript. That keeps the site portable, fast, and easy to deploy through basic hosting or FTP.
+The default is a static website built with HTML, CSS, and JavaScript. You can upload the public website files by FTP to ordinary static hosting without setting up an application server, database, serverless functions, or other backend infrastructure.
+
+If you want a backend, the agent can build a more complex architecture when you explicitly request it. If a feature needs more than static files can provide, the agent explains the limitation and options and asks which approach you want before adding infrastructure or external services. Being an experienced developer or choosing a frontend framework does not automatically opt you into a backend.
 
 You do not need Node.js or npm by default. Agents favor separate HTML, CSS, and JavaScript files, organized asset folders, and locally stored third-party libraries rather than runtime CDN links. Repeated layouts can use reusable JavaScript with content in separate JavaScript objects and arrays, without requiring a build step. These are practical defaults that can change to suit your project.
 
@@ -166,6 +224,12 @@ When the site is ready to test, the agent can offer to start a local preview ser
 Agents build for mobile, tablet, and desktop displays, following your responsive directions and mockups closely. They make small adjustments where guidance is missing so the design remains usable between screen sizes. If your directions conflict or would create layout problems, the agent explains the issue and asks how you want to handle it. Agents check representative viewport sizes with available tools and report any testing limitations.
 
 Future agents should choose the simplest technical architecture that satisfies the project goals and document that choice in `wiki/articles/technical-architecture.md`.
+
+If a feature's behavior is unclear, agents ask what you want it to do. They distinguish working features from demonstrations and unfinished controls. They also keep useful asset source and license notes, offering cautions or alternatives when permissions are uncertain without blocking setup or unrelated work over missing provenance.
+
+## Deployment Help
+
+When you are ready, ask the agent for help uploading the site. It gathers the relevant hosting details then explains which public files to copy, where the homepage belongs, and how to check the deployed result. You do not upload the whole template: the default website works independently of the wiki and the temporary input/output directories. A requested written deployment guide goes in `output/` unless you choose another location. Providing instructions does not automatically publish the site or change your hosting configuration.
 
 ## Working With AI Agents
 

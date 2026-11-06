@@ -152,9 +152,11 @@ Use `wiki/raw/research/` for source material and `wiki/articles/research.md` for
 
 All website implementation work goes inside `site/`.
 
-Choose the simplest technical architecture that satisfies the project goals. If the user does not have a strong preference and no special requirements exist, prefer static HTML, CSS, and JavaScript for portability and easy FTP deployment.
+Default to static HTML, CSS, and JavaScript that a simple static server can serve after the user uploads the public website files by FTP. The default site must not require an application server, database, server-side runtime, serverless functions, special routing rewrites, or a managed backend service. Keep navigation and asset paths compatible with ordinary static hosting.
 
-These are defaults, not a mandatory architecture; adapt when the user's requirements justify a different approach:
+Introduce a backend or backend-dependent architecture only when the user explicitly requests it or chooses it after you explain why a requested feature needs it. Experience level alone is not authorization. If a feature cannot work with static files alone, explain the limitation and available options, then ask which approach the user wants before adding infrastructure or external services. Do not present a visual-only feature as functional. A frontend framework or build tool does not automatically imply approval for a backend; static output remains the deployment target unless otherwise requested.
+
+The following organization and implementation preferences can adapt to project needs; the requirement for explicit user direction before introducing a backend still applies:
 
 - Do not assume Node.js, npm, or other development tools are installed. Do not run package installs or introduce a build pipeline by default. Prefer browser-ready libraries loaded through ordinary script and stylesheet tags. If tooling is needed, explain why and establish the user's preference before introducing it; an explicitly chosen stack can provide that authorization.
 - Prefer downloading needed third-party libraries and serving them locally under `site/assets/vendor/` over relying on CDN URLs at runtime. Use official distribution sources, retain license notices, and record versions and sources in the initialized project's technical notes. Avoid unnecessary dependencies.
@@ -162,6 +164,18 @@ These are defaults, not a mandatory architecture; adapt when the user's requirem
 - Prefer separate CSS and JavaScript files over embedding styles and scripts in HTML. Split JavaScript by meaningful feature or reusable component when helpful. Use deferred loading, on-demand loading, or selective preloading as appropriate; do not preload every file by default.
 - For repeated structures such as portfolio projects, consider reusable rendering logic with content in separate `.js` files containing objects and arrays. Prefer ordinary script tags, with content loaded before the rendering code, when direct-file previews matter. Keep data under a single clear namespace. JSON remains an option when its loading requirements suit the project; do not add abstraction to pages that are simpler as HTML.
 - Preserve accessibility, useful document structure, and discoverability when choosing what to render with JavaScript. Check direct-file compatibility rather than assuming it: modules, fetch requests, and other features may require HTTP.
+
+### Functionality And Asset Notes
+
+If the intended behavior of a feature is unclear, ask a focused question about what the user should be able to do and what should happen next. Continue independent work where possible. Do not invent consequential behavior or present a mockup, placeholder, or disconnected control as a completed working feature. Clearly explain what works, what is a demonstration, and what remains unresolved, including any needed backend or external service choices.
+
+Keep concise provenance notes for retained third-party images, fonts, icons, and libraries when sources are known. Preserve supplied license notices, note known usage restrictions, and label uncertain permissions as unknown rather than assuming clearance. Offer practical suggestions or cautions and alternatives; missing provenance alone must not block setup or unrelated development or turn into a blanket licensing questionnaire. Do not present these notes as legal clearance.
+
+### Deployment Help When Requested
+
+Do not require hosting provider, domain, FTP, or deployment details during setup. Assume ordinary static hosting and defer those specifics until the user requests deployment help. Preserve volunteered constraints without turning them into an upfront hosting questionnaire.
+
+When asked, gather only the details needed for the requested handoff. Explain which public files to upload, where the homepage lives, the relevant document-root location if known, and any actual hosting requirements. The default static site must work independently of `input/`, `output/`, `temp/`, and the wiki. Identify the public deployment files within `site/`; do not instruct users to upload private configuration or the entire repository. If a written handoff is requested, use `output/` unless another destination is specified. Explain transfer and verification steps in the user's preferred style; guidance does not authorize publishing or changing hosting settings.
 
 ### Responsive Design
 
