@@ -112,6 +112,8 @@ Template-maintenance work is allowed before `/setup` when the user is explicitly
 
 ## After Meaningful Work
 
+For initialized website projects, maintaining project memory is part of the work, not an optional follow-up. Update the wiki automatically without waiting for the user to request logging or asking permission for routine progress notes. This applies to meaningful implementation, design, content, research, and planning work, including partial progress and unsuccessful attempts that affect the next step. Do not log every command or routine conversational exchange.
+
 After doing meaningful work:
 
 1. Update affected wiki articles.
@@ -119,6 +121,25 @@ After doing meaningful work:
 3. Update `wiki/articles/task-roadmap.md`.
 4. Append a chronological entry to `wiki/articles/log.md`.
 5. Update `wiki/articles/index.md` if wiki pages were created, renamed, removed, or meaningfully changed.
+
+Before ending a work turn, ensure the log and roadmap reflect the actual state, even if the task is unfinished or waiting for input. For longer tasks, save concise checkpoints after meaningful milestones rather than relying only on a final entry. If a pause or handoff is known in advance, save the current state before stopping when possible; unexpected session termination can prevent a final update.
+
+Each useful progress entry should identify the timestamp with timezone and task or agent, work performed and affected paths, results of relevant checks (including failures or unperformed checks), remaining work or blockers, and the next concrete action. Keep pending proposals and review recommendations distinct from approved work. Summarize related work in one entry where practical; do not duplicate the same history across every article.
+
+Keep a concise **Resume Here** section in `task-roadmap.md`: last meaningful activity, current task and status, unfinished changes or verification, decisions/input still needed, and the next actionable step. Preserve other active tasks when agents work concurrently. Reference durable project paths, never temporary inputs or artifacts that may be deleted.
+
+These logging requirements apply only to initialized website project work. Template maintenance and agent-adaptation-only work must leave project wiki articles and logs untouched unless the user explicitly requests otherwise.
+
+## Resuming A Website Project
+
+When the user asks "Where did we leave off?", "What's next?", or asks to resume after a break:
+
+1. Read the wiki index, latest relevant log entries, roadmap (especially **Resume Here**), open questions, and any relevant decisions. Do not depend on the current chat's memory or assume the latest global log entry is the only active task.
+2. Check the current repository state and relevant files to confirm whether recorded work is still present and whether other agents have made newer changes. Inspect site locks before any proposed site edits. Reconcile stale or conflicting status using evidence; label gaps or uncertainty rather than inventing missing history.
+3. Explain where work stopped: what was completed, what remains unfinished, blockers or pending approvals, and the recommended next step. Use the user's recorded communication preferences and ask focused questions only where needed to resolve uncertainty.
+4. If asked only for status, provide it without starting implementation or creating a redundant log entry. If asked to continue, proceed within the authorized scope using the current instructions and concurrency rules. A saved next step does not override approval requirements or authorize previously unapproved review recommendations.
+
+If the wiki cannot be updated during project work, report the limitation and provide a concise handoff in the response. Do not claim progress has been saved until the writes have succeeded.
 
 ## Repo-Local `/setup`
 

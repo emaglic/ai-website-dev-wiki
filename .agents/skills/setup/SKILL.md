@@ -237,6 +237,7 @@ Unless the user explicitly chooses otherwise, plan for public static files that 
 
 Initialize:
 
+- **Resume Here**: current task and status, last meaningful activity, unfinished work or verification, pending decisions/input, and the next concrete action; follow the agent guide's automatic logging and resumption rules
 - Current status
 - Next tasks
 - Backlog
@@ -287,6 +288,6 @@ After `/setup` is complete:
 1. Verify the final wiki content against the latest concurrent contributions. If site work was also authorized, release any site locks you created after completing that work.
 2. Tell the user which wiki files were initialized.
 3. Explain the recommended next development step.
-4. Continue future work from the initialized wiki and the authoritative operating rules in `AGENTS.md`; tool-specific entry files only route to that guide.
+4. Explain that future project work automatically updates the log and roadmap, and that the user can ask "Where did we leave off?" in a later session. Continue from the initialized wiki and authoritative `AGENTS.md`; tool-specific entry files only route to that guide.
 
 The setup skill may remain in the repository for future reference, but ongoing agents should rely primarily on the initialized wiki.

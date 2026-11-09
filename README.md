@@ -261,6 +261,21 @@ Agents should follow `AGENTS.md` before making meaningful changes. In short:
 
 This makes the repository useful across multiple sessions, tools, and agents.
 
+### Automatic Progress Notes And Resuming Work
+
+Once the project wiki is initialized, agents are instructed to record meaningful work automatically—you do not need to ask them to "log this." They update the project log, maintain current tasks and a **Resume Here** section in the roadmap, and retain useful decisions in the appropriate articles. Notes cover completed and partial work, relevant checks, blockers, pending approvals, and the next concrete step. Longer tasks get checkpoints so progress is not recorded only at the end.
+
+After a break, open the project in your agent tool and ask:
+
+```text
+Where did we leave off? Read the wiki and current project files,
+summarize what's done and unfinished, and recommend the next step.
+```
+
+The agent should check the latest relevant history and actual files before answering. Asking for status does not start new implementation; when you are ready, ask it to continue the agreed task. Pending review recommendations still need your approval.
+
+These are shared agent instructions rather than an automatic background logging service. An interrupted session may miss its final update, and the agent should disclose missing or conflicting records. Template maintenance does not initialize or write to the project wiki.
+
 Agents can update wiki articles concurrently without hard locks. Each agent records a file's modification time when reading it and checks again immediately before writing. If the file changed, the agent rereads it and reconsiders how to fold in its information while preserving other contributions. Content hashes and context-sensitive patches add protection; agents verify the result after writing. The same rules apply to shared logs, which record completed work rather than reserve files. Website development in `site/` continues to use narrowly scoped locks. This coordination reduces conflicts but does not mechanically prevent simultaneous writes.
 
 ## Typical Workflow
@@ -269,7 +284,7 @@ Agents can update wiki articles concurrently without hard locks. Each agent reco
 2. Ask the agent to run `/setup`.
 3. Review the initialized wiki and answer any open questions.
 4. Build the website inside `site/`.
-5. Keep the wiki updated as the project changes.
+5. Agents keep the wiki updated automatically as the project changes; ask "Where did we leave off?" whenever you return.
 
 ## Current State
 
