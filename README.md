@@ -24,7 +24,11 @@ The template helps you:
 
 ### What Is An LLM Wiki?
 
+You don’t need to understand how an LLM wiki works or how to create one from scratch to use this template. This is optional background about how the project works behind the scenes. LLM stands for “large language model,” a kind of AI behind these assistants.
+
 An LLM wiki is a collection of readable Markdown documents that an AI agent maintains as project memory. Here, those documents live in `wiki/articles/` and capture the website's goals, audience, design direction, content status, technical choices, research, decisions, and remaining work.
+
+The template tells agents how to create, use, and maintain that wiki. It explains the folder structure and provides guidance for writing and organizing website code. It starts without knowing what kind of website you are making, how it should look, or what visitors should be able to do. That project direction comes from running `/setup` and answering the agent’s questions. The agent uses your answers to initialize the wiki and refines it as the project develops. You can leave the wiki files to the agent and request summaries or corrections through chat.
 
 Think of it as a project notebook that travels with the code. A chat conversation can become long, lose context, or end entirely; the wiki keeps useful knowledge in files that you and future agents can inspect. Agents are instructed to read the relevant pages before project work and update them as the project evolves.
 
@@ -32,11 +36,53 @@ For example, if you decide that project images should open in a gallery, mobile 
 
 The wiki stores concise, lasting knowledge rather than a transcript of every message. It does not give an agent automatic memory or guarantee that it will make the right decision; it gives agents an explicit, shared reference to consult. You stay in control of the direction while the project becomes easier to continue, review, and hand off.
 
+This template builds on the persistent, agent-maintained wiki concept in [Andrej Karpathy’s LLM wiki gist](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f), adapting it to website planning, design inputs, implementation, and review.
+
+## Download And Open The Template
+
+You do not need coding experience or knowledge of Git to get started. Keep each website in its own copy of the template.
+
+### Download A ZIP (No Git Required)
+
+1. Install [Visual Studio Code](https://code.visualstudio.com/) (VS Code), a free code editor made by Microsoft. It is the workspace where you and your AI assistant open the project; you do not need to write code yourself.
+2. Open [this template on GitHub](https://github.com/emaglic/ai-website-dev-wiki). Above the file list, toward the right, click the green **Code** button, then **Download ZIP**. No GitHub account is needed for this download.
+3. Create a project folder somewhere easy to find. On Windows, right-click the downloaded ZIP, choose **Extract All…**, and select that folder as the destination. On a Mac, double-click the ZIP to unpack it, then move the extracted folder into your project folder.
+4. Find the extracted folder containing `README.md`, `AGENTS.md`, `site/`, and `wiki/` together. It may be an inner folder named `ai-website-dev-wiki-main`. Work from that folder, not from inside the ZIP.
+5. In VS Code, choose **File → Open Folder…**, select that folder, and click **Select Folder** (Windows) or **Open** (Mac). The Explorer panel should show the template files. Review any workspace-trust prompt and trust the folder if it is the template you intentionally downloaded.
+
+Keep the full project folder backed up separately. Downloading a ZIP does not create automatic backups or set up Git version history.
+
+### Clone With Git (Optional)
+
+If you already use Git and have it installed, you can clone instead of downloading a ZIP:
+
+```sh
+git clone https://github.com/emaglic/ai-website-dev-wiki.git my-website
+```
+
+Open the resulting `my-website` folder in your editor. This clone points to the template repository as its `origin`; it does not create a personal GitHub repository or give you permission to push to the template. To maintain your own remote history, create your own repository from the template and clone that repository instead, or change the clone’s remote to a repository you own. For a separate website, start with another fresh copy rather than reusing an initialized project wiki.
+
+### Connect An AI Assistant In VS Code
+
+Choose one provider. Open **View → Extensions** (or click the squares icon in the left sidebar), find the official extension, check its publisher, and click **Install**. Enable it or reload VS Code if asked.
+
+| Provider | Official VS Code extension | Publisher |
+| --- | --- | --- |
+| ChatGPT / OpenAI | [Codex](https://marketplace.visualstudio.com/items?itemName=openai.chatgpt) | OpenAI |
+| Claude | [Claude Code for VS Code](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code) | Anthropic |
+| Gemini | [Gemini Code Assist](https://marketplace.visualstudio.com/items?itemName=Google.geminicodeassist) | Google |
+
+Open the extension’s panel and follow its sign-in instructions, returning to VS Code if it opens a browser. Keep the project folder open and use a mode that can read and edit local files. In Gemini Code Assist, turn on the **Agent** toggle in its chat; standard chat has different capabilities. Native skill commands vary by tool, so use the file-based instructions below if `/setup` is unavailable.
+
+VS Code is free, but AI access, subscriptions, charges, and usage limits depend on your provider and plan. See the official [Codex IDE guide](https://learn.chatgpt.com/docs/codex/ide), [Claude Code VS Code guide](https://code.claude.com/docs/en/vs-code), and [Gemini agent-mode guide](https://docs.cloud.google.com/gemini/docs/codeassist/use-agentic-chat-pair-programmer) for current requirements and help. Read file-access and action requests before approving them; ask the assistant to explain anything unclear.
+
+If your extension offers model selection, choose a current capable model available to your account. For setup or substantial planning, Medium or High effort is a useful starting point; for small edits or a clear plan, try Light or Low. Names and controls differ, and a default setting is fine if no choice is available. More reasoning can take longer and may use more of your allowance. See [Recommended Model Usage](#recommended-model-usage) for the template author’s more specific preferences.
+
 ## Quick Start: Your First Project
 
-1. Create your own project repository from this template, then clone or download it to your computer. Keep each website project in its own copy.
+1. Download and extract the template ZIP using the instructions above, or create your own repository from the template and clone it if you use Git. Keep each website project in its own copy.
 2. Open that project folder in your preferred AI coding tool and give the agent access to its files. You do not need Node.js or npm for the default static website workflow.
-3. Optionally add any materials you already have: website assets in `input/assets/`, design mockups in `input/mockups/`, and lasting copy, references, or research in the appropriate `wiki/raw/` folders. You can add more later; none of this is required to start.
+3. Optionally add any materials you already have: website assets in `input/assets/`, design mockups in `input/mockups/`, and notes, copy, references, or research in `temp/`. Tell the agent which files to review. You can add more later; none of this is required to start. Let the agent organize useful material into the wiki during or after setup.
 4. Ask the agent to initialize the project wiki with `/setup`. If your tool does not recognize that command, paste:
 
    ```text
@@ -102,6 +148,8 @@ For more detail, see [Using Different AI Agents](#using-different-ai-agents) and
 
 The `wiki/articles/` folder is project memory managed by AI agents. Agents should read it before doing meaningful work and update it after meaningful work.
 
+You don’t need to read, organize, or manually edit files inside `wiki/` or its subfolders. Let the agent manage them. Ask for a summary in chat if you want to know the current state, and tell the agent about corrections so it can update related notes consistently. To share new material, put it in `temp/` and ask the agent to review it; the agent decides which information and source files are useful to retain in the wiki.
+
 Key pages include:
 
 - `wiki/articles/index.md`: map of the wiki
@@ -115,13 +163,21 @@ Key pages include:
 - `wiki/articles/open-questions.md`: unresolved questions
 - `wiki/articles/log.md`: chronological project history
 
-The `wiki/raw/` folder is for user-provided source material. Treat these files as source-of-truth input. Agents should not modify raw files unless explicitly asked.
+The `wiki/raw/` folder holds retained user-provided source material. The agent can copy useful source files here from `temp/` and organize them into the appropriate subfolders; you don’t need to place them here yourself. Treat these files as source-of-truth input. Agents should not modify retained raw files unless explicitly asked.
 
 Research uses two layers: `wiki/raw/research/` stores user-provided research sources, while `wiki/articles/research.md` stores only meaningful synthesized findings. Project-specific research should wait until `/setup` has defined the project field, audience, goals, and expert perspective.
 
 ## Design Inputs
 
 Use `input/assets/` for images, logos, fonts, and other assets intended for the website. Use `input/mockups/` for design mockups, such as JPG or PNG exports from Figma. This is your evolving design workspace: you can add, replace, edit, or delete files as the project develops.
+
+To point the agent to a specific file or folder, find it in VS Code’s **Explorer panel** (where your project’s files and folders are listed), right-click it, and choose **Copy Relative Path**. This copies its location within the project to your clipboard. Paste that path into the AI chat and explain what you want the agent to do. For example:
+
+```text
+Review my mockups in input/mockups.
+```
+
+You can use the same method for a single file, such as `input/mockups/homepage-desktop.png`. Use the actual path you copied. On Windows, it may contain backslashes, such as `input\mockups`; you can paste it as it is.
 
 Agents copy assets into the appropriate location under `site/` before using them. Website code references those copies, leaving your working originals intact unless you request otherwise. If a mockup version needs to become a lasting reference, the agent copies it into `wiki/raw/inspiration/`. Wiki articles reference retained copies and never link to files in `input/`.
 
@@ -137,9 +193,18 @@ Wiki articles never link to files in `output/`, and the website must not depend 
 
 ## Temporary Handoffs
 
-Use the top-level `temp/` directory to give the agent temporary material, such as screenshots of the current website or draft proposals for future work. Ask the agent to review the relevant files and fold useful information into the wiki.
+Use the top-level `temp/` directory as the recommended handoff for notes, written content, references, research, screenshots, and draft proposals. This lets you share material without touching the wiki or deciding where it belongs. Website assets and evolving design mockups can still go in `input/assets/` and `input/mockups/`.
 
-You can delete files from `temp/` whenever you like. Agents preserve valuable information in `wiki/articles/` and copy original files worth retaining into the appropriate `wiki/raw/` subdirectory. Proposals remain proposals until approved. Wiki references point to retained copies, never to temporary files.
+Adding files does not notify the agent automatically. Tell it which files to review, using **Copy Relative Path** if helpful. For example:
+
+```text
+Review the files I added to temp/. Keep any information useful for this project
+in the wiki, retain source files worth keeping, and tell me what you saved.
+```
+
+After setup, agents preserve valuable information in `wiki/articles/` and copy original files worth retaining into the appropriate `wiki/raw/` subdirectory. They do not archive everything automatically. Before setup, you can gather material in `temp/`, but project-specific wiki notes wait until setup initializes the project. Proposals remain proposals until approved. Wiki references point to retained copies, never to temporary files.
+
+Wait until the agent confirms what it preserved before deleting temporary files you still need it to process. Once that handoff is complete, you can clear those files from `temp/`.
 
 The agent reports what it preserved and leaves temporary originals for you to manage unless you ask it to delete them. Contents of `temp/` are ignored by Git; a tracked `.gitkeep` ensures the directory exists in new clones. If you delete the directory itself, you can recreate it whenever needed.
 
@@ -205,6 +270,8 @@ The repo-local setup workflow lives at:
 
 Native invocation varies by application: a supported interface may expose `/setup`, `$setup`, or a skill picker. If it does not, use the explicit file-based instruction above. Setup adapts repository-local workflow access to your tool before gathering project details.
 
+Send the request in your AI extension’s message box, not the editor’s terminal. For example: `/setup I would like to initialize this new project.` Setup prepares project memory and a roadmap; ask for the first website implementation task afterward.
+
 During `/setup`, the agent will ask focused questions about:
 
 - your comfort with HTML, CSS, and JavaScript and how you prefer changes and questions to be explained
@@ -265,11 +332,12 @@ This makes the repository useful across multiple sessions, tools, and agents.
 
 Once the project wiki is initialized, agents are instructed to record meaningful work automatically—you do not need to ask them to "log this." They update the project log, maintain current tasks and a **Resume Here** section in the roadmap, and retain useful decisions in the appropriate articles. Notes cover completed and partial work, relevant checks, blockers, pending approvals, and the next concrete step. Longer tasks get checkpoints so progress is not recorded only at the end.
 
-After a break, open the project in your agent tool and ask:
+After a break, open the same project folder in your agent tool and simply type your next request. Usually, the agent should find the project instructions and read the relevant wiki notes and current website files on its own. You don’t need to repeat the project brief or send a special startup message.
+
+If the agent says it doesn’t understand your request or seems unfamiliar with the project, send this reminder:
 
 ```text
-Where did we leave off? Read the wiki and current project files,
-summarize what's done and unfinished, and recommend the next step.
+Read AGENTS.md and the project wiki. Check the current website files, tell me where we left off, and recommend the next step.
 ```
 
 The agent should check the latest relevant history and actual files before answering. Asking for status does not start new implementation; when you are ready, ask it to continue the agreed task. Pending review recommendations still need your approval.
@@ -280,11 +348,11 @@ Agents can update wiki articles concurrently without hard locks. Each agent reco
 
 ## Typical Workflow
 
-1. Add any raw copy, notes, references, screenshots, or brand material to `wiki/raw/`.
+1. Put copy, notes, references, screenshots, or brand material in `temp/` and tell the agent what to review. Use `input/assets/` and `input/mockups/` for your evolving design materials.
 2. Ask the agent to run `/setup`.
-3. Review the initialized wiki and answer any open questions.
+3. Review the agent’s setup summary in chat and answer any open questions. Let the agent organize useful materials and maintain the wiki; you don’t need to edit it yourself.
 4. Build the website inside `site/`.
-5. Agents keep the wiki updated automatically as the project changes; ask "Where did we leave off?" whenever you return.
+5. Agents keep the wiki updated automatically as the project changes. When you return, start with your next request; ask "Where did we leave off?" if you want a status summary.
 
 ## Current State
 
