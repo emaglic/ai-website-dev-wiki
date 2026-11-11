@@ -4,6 +4,8 @@ Turn your ideas, mockups, and content into a website with an AI development part
 
 AI Website Dev Wiki is a reusable template for AI-assisted web development, from the first project brief through design, implementation, review, and deployment guidance. It brings your website files, design inputs, and project knowledge into one organized repository, with instructions that help agents work consistently across sessions and tools.
 
+Site builders can make getting started easy, but their themes, preset layouts, and editing controls can limit how closely you can follow your own design. With AI Website Dev Wiki, you describe what you want and provide your mockups; the agent writes the website code to match. You aren’t confined to a site builder’s templates or themes: you can shape the layout, styling, and interactions around your ideas. The template here organizes the work—it doesn’t prescribe how your website should look.
+
 You can start with no coding experience, bring years of web development experience, or fall anywhere in between. Describe what you want to build, share the materials you have, and let the agent help turn those into a practical plan and working website. The default approach uses static HTML, CSS, and JavaScript, so getting started does not require Node.js, npm, or backend infrastructure.
 
 ## What This Template Is For
